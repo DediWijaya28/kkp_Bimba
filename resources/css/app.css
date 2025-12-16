@@ -1,0 +1,33 @@
+/* Tailwind CSS v4 Configuration */
+@import "tailwindcss";
+
+@source "../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php";
+@source "../../storage/framework/views/*.php";
+@source "../**/*.blade.php";
+@source "../**/*.js";
+
+@theme {
+    --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+        "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+/* Custom Breakpoints */
+/* Mobile */
+@media (max-width: 576px) {
+    /* Custom Mobile Styles */
+}
+
+/* Tablet */
+@media (min-width: 577px) and (max-width: 991px) {
+    /* Custom Tablet Styles */
+}
+
+/* Laptop */
+@media (min-width: 992px) and (max-width: 1199px) {
+    /* Custom Laptop Styles */
+}
+
+/* Desktop */
+@media (min-width: 1200px) {
+    /* Custom Desktop Styles */
+}
