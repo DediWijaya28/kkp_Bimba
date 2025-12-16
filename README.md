@@ -42,7 +42,28 @@ Aplikasi Penerimaan Peserta Didik Baru (PPDB) berbasis web untuk BIMBA AIUEO Uni
 *   MySQL Database
 *   Node.js & NPM (untuk compile aset)
 
-## 📦 Instalasi
+## �️ Spesifikasi Software dan Hardware
+
+Berikut adalah spesifikasi perangkat keras dan perangkat lunak yang digunakan dalam pengembangan dan operasional sistem ini:
+
+### Perangkat Keras (Hardware)
+*   **Processor**: Minimal Intel Core i3 / AMD Ryzen 3
+*   **RAM**: Minimal 8 GB (Disarankan 16 GB untuk development)
+*   **Penyimpanan**: SSD minimal 256 GB
+*   **Monitor**: Resolusi 1366x768 atau lebih tinggi
+*   **Koneksi Internet**: Diperlukan untuk akses API wilayah (EMSIFA) dan Peta (Nominatim)
+
+### Perangkat Lunak (Software)
+*   **Sistem Operasi**: Windows 10/11, macOS, atau Linux
+*   **Web Server**: XAMPP (Apache) / Laragon / Valet
+*   **Database Server**: MySQL / MariaDB
+*   **Bahasa Pemrograman**: PHP 8.1+
+*   **Framework**: Laravel 10
+*   **Code Editor**: Visual Studio Code (VS Code)
+*   **Browser**: Google Chrome / Microsoft Edge / Mozilla Firefox
+*   **Version Control**: Git
+
+## �📦 Instalasi
 Ikuti langkah-langkah berikut untuk menjalankan proyek di komputer lokal:
 
 1.  **Clone Repository**
