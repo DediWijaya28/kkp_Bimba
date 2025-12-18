@@ -60,7 +60,6 @@
                             <svg class="w-5 h-5 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             <span class="text-sm text-green-800">Disetujui pada {{ $student->warranty->signed_at->format('d M Y H:i') }}</span>
                         </div> -->
-                        <!-- Placeholder for download PDF if implemented -->
                         <button disabled class="text-xs text-gray-400 cursor-not-allowed">Download PDF</button>
                     </div>
                 @else

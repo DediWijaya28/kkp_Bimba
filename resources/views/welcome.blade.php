@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>biMBA AIUEO</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/logo-bimba1.png') }}?v=2">
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
@@ -28,10 +29,10 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex items-center justify-between h-20">
                 <div class="flex items-center gap-3">
-                    <img src="{{ asset('images/logo-bimba1.png') }}" 
+                    <img src="{{ asset('images/logo-bimba1.png') }}?v=2" 
                          alt="Logo" 
-                         class="h-16 w-auto object-contain">
-                    <span class="font-bold text-xl text-[#1b1b18]"  style="font-family: 'Comic Sans MS', 'Comic Sans', cursive;">
+                         class="h-18 w-auto object-contain">
+                    <span class="font-bold text-2xl text-[#1b1b18]"  style="font-family: 'Comic Sans MS', 'Comic Sans', cursive;">
                         <span class="text-[#0337f5]">b</span><span class="text-[#0337f5]">i</span><span class="text-[#f50303]">M</span><span class="text-[#0337f5]">B</span><span class="text-[#0337f5]">A</span>
                         <span class="text-[#f50303]">A</span><span class="text-[#e9f503]">I</span><span class="text-[#0337f5]">U</span><span class="text-[#0f7002]">E</span><span class="text-[#ed912f]">O</span>
                     </span>
@@ -111,7 +112,7 @@
             </div>
         </div>
         <div class="flex-1 w-full flex justify-center">
-            <div class="w-full max-w-md aspect-[2/2] bg-gray-100 rounded-3xl overflow-hidden shadow-2xl shadow-gray-100 border border-white relative group">
+            <div class="w-full max-w-md">
                 <img src="{{ asset('images/logo-bimba.png') }}" 
                      alt="Education" 
                      class="w-full h-full object-contain p-2 transform group-hover:scale-105 transition duration-500">
@@ -229,17 +230,17 @@
             <div class="grid md:grid-cols-3 gap-6">
                 <a href="{{ route('program.pdi') }}" class="block group relative overflow-hidden rounded-2xl bg-yellow-50 border border-yellow-100 p-8 hover:bg-yellow-100 transition cursor-pointer">
                     <h3 class="text-2xl font-bold text-black-800 mb-2">PDI (Peserta Didik Intensif)</h3>
-                    <span class="absolute bottom-0 right-0 p-4 text-6xl opacity-20 transform translate-x-2 translate-y-2 group-hover:scale-110 transition">🧸</span>
+                    <span class="absolute bottom-0 right-0 p-4 text-6xl opacity-20 transform translate-x-2 translate-y-2 group-hover:scale-110 transition"></span>
                 </a>
 
                 <a href="{{ route('program.pds') }}" class="block group relative overflow-hidden rounded-2xl bg-red-50 border border-red-100 p-8 hover:bg-red-100 transition cursor-pointer">
                     <h3 class="text-2xl font-bold text-black-800 mb-2">PDS (Peserta Didik Standar)</h3>
-                    <span class="absolute bottom-0 right-0 p-4 text-6xl opacity-20 transform translate-x-2 translate-y-2 group-hover:scale-110 transition">🧸</span>
+                    <span class="absolute bottom-0 right-0 p-4 text-6xl opacity-20 transform translate-x-2 translate-y-2 group-hover:scale-110 transition"></span>
                 </a>
 
                 <a href="{{ route('program.pbm') }}" class="block group relative overflow-hidden rounded-2xl bg-blue-50 border border-blue-100 p-8 hover:bg-blue-100 transition cursor-pointer">
                     <h3 class="text-2xl font-bold text-black-800 mb-2">PBM (Program Belajar Mandiri)</h3>
-                    <span class="absolute bottom-0 right-0 p-4 text-6xl opacity-20 transform translate-x-2 translate-y-2 group-hover:scale-110 transition">🧸</span>
+                    <span class="absolute bottom-0 right-0 p-4 text-6xl opacity-20 transform translate-x-2 translate-y-2 group-hover:scale-110 transition"></span>
                 </a>
             </div>
         </div>
@@ -255,25 +256,25 @@
                 <a href="{{ route('kurikulum.level-1') }}" class="block group relative overflow-hidden rounded-2xl bg-green-50 border border-green-100 p-8 hover:bg-green-100 transition cursor-pointer">
                     <h3 class="text-2xl font-bold text-black-800 mb-2">Level 1</h3>
                     <p class="text-black-600 mb-6 text-sm">Membaca Kata Sederhana</p>
-                    <span class="absolute bottom-0 right-0 p-4 text-6xl opacity-20 transform translate-x-2 translate-y-2 group-hover:scale-110 transition">🌱</span>
+                    <span class="absolute bottom-0 right-0 p-4 text-6xl opacity-20 transform translate-x-2 translate-y-2 group-hover:scale-110 transition"></span>
                 </a>
 
                 <a href="{{ route('kurikulum.level-2') }}" class="block group relative overflow-hidden rounded-2xl bg-orange-50 border border-orange-100 p-8 hover:bg-orange-100 transition cursor-pointer">
                     <h3 class="text-2xl font-bold text-black-800 mb-2">Level 2</h3>
                     <p class="text-black-600 mb-6 text-sm">Pengembangan Baca</p>
-                    <span class="absolute bottom-0 right-0 p-4 text-6xl opacity-20 transform translate-x-2 translate-y-2 group-hover:scale-110 transition">🌿</span>
+                    <span class="absolute bottom-0 right-0 p-4 text-6xl opacity-20 transform translate-x-2 translate-y-2 group-hover:scale-110 transition"></span>
                 </a>
 
                 <a href="{{ route('kurikulum.level-3') }}" class="block group relative overflow-hidden rounded-2xl bg-purple-50 border border-purple-100 p-8 hover:bg-purple-100 transition cursor-pointer">
                     <h3 class="text-2xl font-bold text-black-800 mb-2">Level 3</h3>
                     <p class="text-black-600 mb-6 text-sm">Pemantapan & Logika</p>
-                    <span class="absolute bottom-0 right-0 p-4 text-6xl opacity-20 transform translate-x-2 translate-y-2 group-hover:scale-110 transition">🌳</span>
+                    <span class="absolute bottom-0 right-0 p-4 text-6xl opacity-20 transform translate-x-2 translate-y-2 group-hover:scale-110 transition"></span>
                 </a>
 
                 <a href="{{ route('kurikulum.level-4') }}" class="block group relative overflow-hidden rounded-2xl bg-blue-50 border border-blue-100 p-8 hover:bg-blue-100 transition cursor-pointer">
                     <h3 class="text-2xl font-bold text-black-800 mb-2">Level 4</h3>
                     <p class="text-black-600 mb-6 text-sm">Pemantapan & Logika Lanjutan</p>
-                    <span class="absolute bottom-0 right-0 p-4 text-6xl opacity-20 transform translate-x-2 translate-y-2 group-hover:scale-110 transition">🎓</span>
+                    <span class="absolute bottom-0 right-0 p-4 text-6xl opacity-20 transform translate-x-2 translate-y-2 group-hover:scale-110 transition"></span>
                 </a>
             </div>
         </div>

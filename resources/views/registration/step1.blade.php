@@ -88,6 +88,63 @@
                     @error('birth_date') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
                 <div>
+<!-- ... Dropdowns reversion ... -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-1">Provinsi</label>
+                            <select name="province_id" x-model="selectedProvince" @change="loadCities()" class="w-full rounded-xl border-gray-400 bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white transition-all duration-200 px-4 py-3 shadow-sm">
+<!-- ... -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-1">Kota/Kabupaten</label>
+                            <select name="city_id" x-model="selectedCity" @change="loadDistricts()" :disabled="!selectedProvince" class="w-full rounded-xl border-gray-400 bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white transition-all duration-200 px-4 py-3 shadow-sm disabled:opacity-60 disabled:cursor-not-allowed">
+<!-- ... -->
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-1">Kecamatan</label>
+                            <select name="district_id" x-model="selectedDistrict" @change="loadVillages()" :disabled="!selectedCity" class="w-full rounded-xl border-gray-400 bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white transition-all duration-200 px-4 py-3 shadow-sm disabled:opacity-60 disabled:cursor-not-allowed">
+<!-- ... -->
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('addressForm', () => ({
+            provinces: [],
+            cities: [],
+            districts: [],
+            villages: [],
+            // Prefer server-side old/db value, otherwise fallback to localStorage
+            selectedProvince: '{{ old('province_id', $student->province_id ?? '') }}' || localStorage.getItem('reg_province_id') || '',
+            selectedCity: '{{ old('city_id', $student->city_id ?? '') }}' || localStorage.getItem('reg_city_id') || '',
+            selectedDistrict: '{{ old('district_id', $student->district_id ?? '') }}' || localStorage.getItem('reg_district_id') || '',
+            selectedVillage: '{{ old('village_id', $student->village_id ?? '') }}' || localStorage.getItem('reg_village_id') || '',
+            streetAddress: '{{ old('street_address', $student->street_address ?? '') }}' || localStorage.getItem('reg_street_address') || '',
+            suggestions: [],
+            loading: false,
+            loadingAddress: false,
+
+            async init() {
+                // Setup watchers to save to localStorage
+                this.$watch('selectedProvince', val => localStorage.setItem('reg_province_id', val));
+                this.$watch('selectedCity', val => localStorage.setItem('reg_city_id', val));
+                this.$watch('selectedDistrict', val => localStorage.setItem('reg_district_id', val));
+                this.$watch('selectedVillage', val => localStorage.setItem('reg_village_id', val));
+                this.$watch('streetAddress', val => localStorage.setItem('reg_street_address', val));
+
+                this.loading = true;
+                try {
+                    const response = await fetch('https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json');
+                    this.provinces = await response.json();
+
+                    if (this.selectedProvince) {
+                        await this.loadCities();
+                        if (this.selectedCity) {
+                            await this.loadDistricts();
+                            if (this.selectedDistrict) {
+                                await this.loadVillages();
+                            }
+                        }
+                    }
+                } catch (e) {
+                    console.error('Failed to load provinces', e);
+                } finally {
+                    this.loading = false;
+                }
+            },
                     <label class="block text-sm font-medium text-gray-700 mb-1">Agama <span class="text-red-500">*</span></label>
                     <select name="religion" required class="w-full rounded-xl border-gray-400 bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white transition-all duration-200 px-4 py-3 shadow-sm">
                         <option value="Islam" {{ (old('religion', $student->religion ?? '') == 'Islam') ? 'selected' : '' }}>Islam</option>
@@ -278,16 +335,24 @@
             cities: [],
             districts: [],
             villages: [],
-            selectedProvince: '{{ old('province_id', $student->province_id ?? '') }}',
-            selectedCity: '{{ old('city_id', $student->city_id ?? '') }}',
-            selectedDistrict: '{{ old('district_id', $student->district_id ?? '') }}',
-            selectedVillage: '{{ old('village_id', $student->village_id ?? '') }}',
-            streetAddress: '{{ old('street_address', $student->street_address ?? '') }}',
+            // Prefer server-side old/db value, otherwise fallback to localStorage
+            selectedProvince: '',
+            selectedCity: '',
+            selectedDistrict: '',
+            selectedVillage: '',
+            streetAddress: '',
             suggestions: [],
             loading: false,
             loadingAddress: false,
 
             async init() {
+                // Setup watchers to save to localStorage
+                this.$watch('selectedProvince', val => localStorage.setItem('reg_province_id', val));
+                this.$watch('selectedCity', val => localStorage.setItem('reg_city_id', val));
+                this.$watch('selectedDistrict', val => localStorage.setItem('reg_district_id', val));
+                this.$watch('selectedVillage', val => localStorage.setItem('reg_village_id', val));
+                this.$watch('streetAddress', val => localStorage.setItem('reg_street_address', val));
+
                 this.loading = true;
                 try {
                     const response = await fetch('https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json');
@@ -335,8 +400,17 @@
                 if (!this.selectedProvince) return;
                 this.loading = true;
                 this.cities = [];
-                this.districts = [];
-                this.villages = [];
+                // ONLY reset children if the user manually changed the parent (not during initial load)
+                // We can check if the current selectedCity is valid for this province later, 
+                // but for simplicity, if we are loading cities, we usually want to keep the selectedCity 
+                // if it was set during init (restored from storage).
+                // However, "change" event calls this. If "change" event, we might want to clear children.
+                // But x-model binding updates before change. 
+                // Best approach: If the existing selectedCity is not in the new list, it will naturally be invalid, 
+                // but for UI usage, if this is triggered by a user change, they likely want to reset.
+                // We'll trust the init flow (which calls loadCities) to preserve values, 
+                // and the watcher logic implies if the value changes, it saves.
+                
                 try {
                     const response = await fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${this.selectedProvince}.json`);
                     this.cities = await response.json();
@@ -351,7 +425,6 @@
                 if (!this.selectedCity) return;
                 this.loading = true;
                 this.districts = [];
-                this.villages = [];
                 try {
                     const response = await fetch(`https://www.emsifa.com/api-wilayah-indonesia/api/districts/${this.selectedCity}.json`);
                     this.districts = await response.json();
@@ -381,6 +454,51 @@
             getDistrictName() { const id = this.selectedDistrict; return (this.districts.find(d => String(d.id) === String(id)) || {}).name || ''; },
             getVillageName() { const id = this.selectedVillage; return (this.villages.find(v => String(v.id) === String(id)) || {}).name || ''; }
         }));
+    });
+
+    // Generic Form Persistence for non-Alpine fields
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        const inputs = form.querySelectorAll('input:not([type="hidden"]):not([type="password"]), select, textarea');
+
+        // Restore values
+        inputs.forEach(input => {
+            // Skip if controlled by Alpine (address fields have x-model)
+            if (input.hasAttribute('x-model')) return;
+
+            const name = input.name;
+            const storedValue = localStorage.getItem('reg_' + name);
+            if (storedValue && !input.value) { // Only restore if server/old value is empty
+                if (input.type === 'radio' || input.type === 'checkbox') {
+                    if (input.value === storedValue) {
+                        input.checked = true;
+                    }
+                } else {
+                    input.value = storedValue;
+                }
+            }
+        });
+
+        // Save values on change
+        form.addEventListener('input', function(e) {
+            const input = e.target;
+            if (input.name && input.type !== 'password' && !input.hasAttribute('x-model')) {
+                localStorage.setItem('reg_' + input.name, input.value);
+            }
+        });
+        
+        form.addEventListener('change', function(e) {
+            const input = e.target;
+             if (input.name && (input.type === 'radio' || input.type === 'checkbox') && !input.hasAttribute('x-model')) {
+                localStorage.setItem('reg_' + input.name, input.value);
+            } else if (input.tagName === 'SELECT' && !input.hasAttribute('x-model')) {
+                localStorage.setItem('reg_' + input.name, input.value);
+            }
+        });
+
+        // Optional: Clear storage on successful submit? 
+        // We'll leave it for now in case submission fails due to server error so data is safe.
+        // If you want to clear it, you'd add a 'submit' listener that checks validity.
     });
 </script>
 @endsection

@@ -8,7 +8,7 @@
         <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
             <div class="p-8">
                 <h2 class="text-3xl font-bold text-gray-900 mb-2">Buat Akun Baru</h2>
-                <p class="text-black-500 mb-8">Mulai perjalanan belajar anak Anda bersama kami.</p>
+                <p class="text-gray-500 mb-8">Mulai perjalanan belajar anak Anda bersama kami.</p>
 
                 <form action="{{ route('register.post') }}" method="POST" class="space-y-6">
                     @csrf

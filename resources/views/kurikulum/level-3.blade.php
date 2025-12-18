@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Kurikulum Tahap 3 - PPDB biMBA AIUEO</title>
+    <title>Kelas Level 3</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/logo-bimba1.png') }}?v=2">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -14,10 +15,10 @@
          <div class="max-w-7xl mx-auto px-6">
             <div class="flex items-center justify-between h-20">
                 <div class="flex items-center gap-3">
-                     <img src="{{ asset('images/logo-bimba1.png') }}" 
+                     <img src="{{ asset('images/logo-bimba1.png') }}?v=2" 
                          alt="Logo" 
-                         class="h-16 w-auto object-contain">
-                    <span class="font-bold text-xl text-[#1b1b18]"  style="font-family: 'Comic Sans MS', 'Comic Sans', cursive;">
+                         class="h-18 w-auto object-contain">
+                    <span class="font-bold text-2xl text-[#1b1b18]"  style="font-family: 'Comic Sans MS', 'Comic Sans', cursive;">
                         <span class="text-[#0337f5]">b</span><span class="text-[#0337f5]">i</span><span class="text-[#f50303]">M</span><span class="text-[#0337f5]">B</span><span class="text-[#0337f5]">A</span>
                         <span class="text-[#f50303]">A</span><span class="text-[#e9f503]">I</span><span class="text-[#0337f5]">U</span><span class="text-[#0f7002]">E</span><span class="text-[#ed912f]">O</span>
                     </span>

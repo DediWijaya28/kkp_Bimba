@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'biMBA AIUEO')</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/logo-bimba1.png') }}?v=2">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -32,10 +33,10 @@
                 <!-- Logo & Brand -->
                 <div class="flex items-center gap-3">
                     <a href="{{ url('/') }}" class="flex items-center gap-2">
-                        <img src="{{ asset('images/logo-bimba1.png') }}" 
+                        <img src="{{ asset('images/logo-bimba1.png') }}?v=2" 
                              alt="Logo" 
-                             class="h-10 w-auto object-contain">
-                        <span class="font-bold text-lg text-[#1b1b18] leading-none hidden sm:block" style="font-family: 'Comic Sans MS', 'Comic Sans', cursive;">
+                             class="h-14 w-auto object-contain">
+                        <span class="font-bold text-xl text-[#1b1b18] leading-none hidden sm:block" style="font-family: 'Comic Sans MS', 'Comic Sans', cursive;">
                             <span class="text-[#0337f5]">b</span><span class="text-[#0337f5]">i</span><span class="text-[#f50303]">M</span><span class="text-[#0337f5]">B</span><span class="text-[#0337f5]">A</span>
                             <span class="text-[#f50303]">A</span><span class="text-[#e9f503]">I</span><span class="text-[#0337f5]">U</span><span class="text-[#0f7002]">E</span><span class="text-[#ed912f]">O</span>
                         </span>
