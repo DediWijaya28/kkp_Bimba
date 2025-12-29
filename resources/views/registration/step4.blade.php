@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Langkah 2: Pilih Kelas - BIMBA AIUEO Unit Klender')
+@section('title', 'Langkah 2: Pilih Kelas')
 
 @section('content')
 <div class="max-w-3xl mx-auto">
@@ -31,10 +31,23 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 @forelse($classes as $class)
+                    @php
+                        $badgeClass = match($class->program ?? '') {
+                            'PDI' => 'bg-blue-100 text-blue-700 border-blue-200',
+                            'PDS' => 'bg-emerald-100 text-emerald-700 border-emerald-200',
+                            'PBM' => 'bg-amber-100 text-amber-700 border-amber-200',
+                            default => 'bg-gray-100 text-gray-700 border-gray-200'
+                        };
+                    @endphp
                     <label class="relative flex flex-col bg-white p-4 rounded-lg border-2 cursor-pointer hover:border-indigo-200 focus-within:border-indigo-600 transition">
                         <input type="radio" name="class_id" value="{{ $class->id }}" class="sr-only peer" required>
                         <div class="flex items-center justify-between mb-2">
-                            <span class="text-sm font-semibold text-gray-900">{{ $class->name }}</span>
+                            <div class="flex items-center gap-2">
+                                <span class="text-[10px] font-bold px-2 py-0.5 rounded border {{ $badgeClass }}">
+                                    {{ $class->program }}
+                                </span>
+                                <span class="text-sm font-semibold text-gray-900">{{ $class->name }}</span>
+                            </div>
                             <div class="flex items-center gap-3">
                                 <span class="text-xs font-medium px-2 py-1 bg-green-100 text-green-800 rounded-full">Sisa: {{ $class->quota - $class->filled }}</span>
                                 <span class="text-xs font-semibold text-indigo-700">Rp {{ number_format($class->price,0,',','.') }}</span>

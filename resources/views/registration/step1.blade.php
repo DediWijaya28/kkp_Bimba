@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Langkah 1: Data Diri - BIMBA AIUEO Unit Klender')
+@section('title', 'Form Data Diri Siswa')
 
 @section('content')
 <div class="max-w-3xl mx-auto">
@@ -76,11 +76,9 @@
                     @error('gender') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
                 <div>
-                <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Tempat Lahir <span class="text-red-500">*</span></label>
                     <input type="text" name="birth_place" value="{{ old('birth_place', $student->birth_place ?? '') }}" required class="w-full rounded-xl border-gray-400 bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white transition-all duration-200 px-4 py-3 shadow-sm capitalize" placeholder="Kota kelahiran">
                     @error('birth_place') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
-                </div>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Tanggal Lahir <span class="text-red-500">*</span></label>
@@ -88,63 +86,8 @@
                     @error('birth_date') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 </div>
                 <div>
-<!-- ... Dropdowns reversion ... -->
-                        <div>
-                            <label class="block text-xs font-medium text-gray-500 mb-1">Provinsi</label>
-                            <select name="province_id" x-model="selectedProvince" @change="loadCities()" class="w-full rounded-xl border-gray-400 bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white transition-all duration-200 px-4 py-3 shadow-sm">
-<!-- ... -->
-                        <div>
-                            <label class="block text-xs font-medium text-gray-500 mb-1">Kota/Kabupaten</label>
-                            <select name="city_id" x-model="selectedCity" @change="loadDistricts()" :disabled="!selectedProvince" class="w-full rounded-xl border-gray-400 bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white transition-all duration-200 px-4 py-3 shadow-sm disabled:opacity-60 disabled:cursor-not-allowed">
-<!-- ... -->
-                        <div>
-                            <label class="block text-xs font-medium text-gray-500 mb-1">Kecamatan</label>
-                            <select name="district_id" x-model="selectedDistrict" @change="loadVillages()" :disabled="!selectedCity" class="w-full rounded-xl border-gray-400 bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white transition-all duration-200 px-4 py-3 shadow-sm disabled:opacity-60 disabled:cursor-not-allowed">
-<!-- ... -->
-    document.addEventListener('alpine:init', () => {
-        Alpine.data('addressForm', () => ({
-            provinces: [],
-            cities: [],
-            districts: [],
-            villages: [],
-            // Prefer server-side old/db value, otherwise fallback to localStorage
-            selectedProvince: '{{ old('province_id', $student->province_id ?? '') }}' || localStorage.getItem('reg_province_id') || '',
-            selectedCity: '{{ old('city_id', $student->city_id ?? '') }}' || localStorage.getItem('reg_city_id') || '',
-            selectedDistrict: '{{ old('district_id', $student->district_id ?? '') }}' || localStorage.getItem('reg_district_id') || '',
-            selectedVillage: '{{ old('village_id', $student->village_id ?? '') }}' || localStorage.getItem('reg_village_id') || '',
-            streetAddress: '{{ old('street_address', $student->street_address ?? '') }}' || localStorage.getItem('reg_street_address') || '',
-            suggestions: [],
-            loading: false,
-            loadingAddress: false,
 
-            async init() {
-                // Setup watchers to save to localStorage
-                this.$watch('selectedProvince', val => localStorage.setItem('reg_province_id', val));
-                this.$watch('selectedCity', val => localStorage.setItem('reg_city_id', val));
-                this.$watch('selectedDistrict', val => localStorage.setItem('reg_district_id', val));
-                this.$watch('selectedVillage', val => localStorage.setItem('reg_village_id', val));
-                this.$watch('streetAddress', val => localStorage.setItem('reg_street_address', val));
 
-                this.loading = true;
-                try {
-                    const response = await fetch('https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json');
-                    this.provinces = await response.json();
-
-                    if (this.selectedProvince) {
-                        await this.loadCities();
-                        if (this.selectedCity) {
-                            await this.loadDistricts();
-                            if (this.selectedDistrict) {
-                                await this.loadVillages();
-                            }
-                        }
-                    }
-                } catch (e) {
-                    console.error('Failed to load provinces', e);
-                } finally {
-                    this.loading = false;
-                }
-            },
                     <label class="block text-sm font-medium text-gray-700 mb-1">Agama <span class="text-red-500">*</span></label>
                     <select name="religion" required class="w-full rounded-xl border-gray-400 bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white transition-all duration-200 px-4 py-3 shadow-sm">
                         <option value="Islam" {{ (old('religion', $student->religion ?? '') == 'Islam') ? 'selected' : '' }}>Islam</option>
@@ -320,9 +263,9 @@
             </div>
         </div>
 
-        <div class="flex justify-end gap-3">
-             <button type="submit" class="bg-indigo-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-                Lanjut (Pilih Kelas & Pembayaran) &rarr;
+        <div class="flex justify-end items-center bg-gray-50 px-6 py-4 rounded-b-2xl mt-8">
+            <button type="submit" class="bg-indigo-600 text-white px-8 py-3 rounded-lg font-bold hover:bg-indigo-700 transition shadow-lg hover:shadow-indigo-500/30">
+                Lanjut (Pilih Kelas) &rarr;
             </button>
         </div>
     </form>

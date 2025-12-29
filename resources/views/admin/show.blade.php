@@ -137,7 +137,9 @@
                     <div class="bg-indigo-50 p-4 rounded-lg border border-indigo-100">
                         <div class="flex justify-between items-start">
                             <div>
-                                <h4 class="font-bold text-indigo-900">{{ $selection->schoolClass->name }}</h4>
+                                <h4 class="font-bold text-indigo-900">
+                                    {{ $selection->schoolClass->program ? $selection->schoolClass->program . ' - ' : '' }}{{ $selection->schoolClass->name }}
+                                </h4>
                                 <p class="text-sm text-indigo-700">{{ $selection->schoolClass->day }} - {{ $selection->schoolClass->time }}</p>
                             </div>
                             <span class="px-2 py-1 bg-indigo-200 text-indigo-800 text-xs font-bold rounded">TERPILIH</span>
@@ -163,7 +165,7 @@
                     </div>
                     
                     @if($student->payment->proof_path)
-                        <div class="mb-4">
+                        <div class="mb-6">
                             <p class="text-sm text-indigo-700 font-semibold mb-2">Bukti Transfer</p>
                             <a href="{{ asset('storage/' . $student->payment->proof_path) }}" target="_blank" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
@@ -171,6 +173,54 @@
                             </a>
                         </div>
                     @endif
+
+                    <!-- Admin Payment Details Form -->
+                    <div class="border-t border-indigo-200 pt-4 mt-4">
+                        <h4 class="text-md font-bold text-indigo-900 mb-3">Rincian Bukti Pendaftaran</h4>
+                        <form action="{{ route('admin.updatePaymentDetails', $student) }}" method="POST" class="space-y-3">
+                            @csrf
+                            @method('PUT')
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-medium text-indigo-800 mb-1">Nomor Registrasi</label>
+                                    <input type="text" name="registration_number" value="{{ old('registration_number', $student->payment->registration_number ?? date('dmY').'/REG/'.str_pad($student->id, 3, '0', STR_PAD_LEFT)) }}" class="w-full text-sm rounded-md border-indigo-300 focus:ring-indigo-500 focus:border-indigo-500">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-indigo-800 mb-1">Penanda Tangan</label>
+                                    <input type="text" name="authorized_signer" value="{{ old('authorized_signer', $student->payment->authorized_signer ?? 'Rosdiana') }}" class="w-full text-sm rounded-md border-indigo-300 focus:ring-indigo-500 focus:border-indigo-500">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-indigo-800 mb-1">Biaya Pendaftaran</label>
+                                    <div class="relative rounded-md shadow-sm">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <span class="text-gray-500 sm:text-sm">Rp</span>
+                                        </div>
+                                        <input type="number" name="registration_fee" value="{{ old('registration_fee', ($student->payment->registration_fee > 0 ? $student->payment->registration_fee : ($student->classSelections->where('status', 'selected')->first()?->schoolClass->price ?? 0))) }}" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-indigo-300 rounded-md" placeholder="0.00">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-indigo-800 mb-1">Biaya SPP</label>
+                                    <div class="relative rounded-md shadow-sm">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <span class="text-gray-500 sm:text-sm">Rp</span>
+                                        </div>
+                                        <input type="number" name="spp_fee" value="{{ old('spp_fee', $student->payment->spp_fee ?? 0) }}" class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-indigo-300 rounded-md" placeholder="0.00">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex justify-end space-x-3 pt-2">
+                                <button type="submit" class="bg-indigo-600 text-white px-3 py-1.5 rounded text-sm hover:bg-indigo-700 transition">
+                                    Simpan Rincian
+                                </button>
+                                @if($student->payment->registration_number)
+                                    <a href="{{ route('payment.print-proof', $student) }}" target="_blank" class="bg-white border border-indigo-600 text-indigo-600 px-3 py-1.5 rounded text-sm hover:bg-indigo-50 transition flex items-center">
+                                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                        Download PDF Bukti
+                                    </a>
+                                @endif
+                            </div>
+                        </form>
+                    </div>
                 </div>
             @endif
 

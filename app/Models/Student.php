@@ -23,7 +23,11 @@ class Student extends Model
         'district_id',
         'village_id',
         'street_address',
+        'rt',
+        'rw',
+        'house_number',
         'nim',
+        'revision_note',
     ];
 
     protected $casts = [

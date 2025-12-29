@@ -13,6 +13,10 @@ class Payment extends Model
         'proof_path',
         'status',
         'verified_at',
+        'registration_number',
+        'registration_fee',
+        'spp_fee',
+        'authorized_signer',
     ];
 
     protected $casts = [

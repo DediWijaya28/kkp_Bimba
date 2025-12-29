@@ -77,4 +77,9 @@ class TrialController extends Controller
         $trial->update($data);
         return back()->with('success', 'Status trial berhasil diperbarui.');
     }
+    public function destroy(Trial $trial)
+    {
+        $trial->delete();
+        return back()->with('success', 'Data trial berhasil dihapus.');
+    }
 }

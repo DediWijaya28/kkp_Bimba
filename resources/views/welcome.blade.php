@@ -255,25 +255,25 @@
             <div class="grid md:grid-cols-3 gap-6">
                 <a href="{{ route('kurikulum.level-1') }}" class="block group relative overflow-hidden rounded-2xl bg-green-50 border border-green-100 p-8 hover:bg-green-100 transition cursor-pointer">
                     <h3 class="text-2xl font-bold text-black-800 mb-2">Level 1</h3>
-                    <p class="text-black-600 mb-6 text-sm">Membaca Kata Sederhana</p>
+                    <p class="text-black-600 mb-6 text-sm">Membaca 100 Kata Sederhana</p>
                     <span class="absolute bottom-0 right-0 p-4 text-6xl opacity-20 transform translate-x-2 translate-y-2 group-hover:scale-110 transition"></span>
                 </a>
 
                 <a href="{{ route('kurikulum.level-2') }}" class="block group relative overflow-hidden rounded-2xl bg-orange-50 border border-orange-100 p-8 hover:bg-orange-100 transition cursor-pointer">
                     <h3 class="text-2xl font-bold text-black-800 mb-2">Level 2</h3>
-                    <p class="text-black-600 mb-6 text-sm">Pengembangan Baca</p>
+                    <p class="text-black-600 mb-6 text-sm">Membaca Paragraf</p>
                     <span class="absolute bottom-0 right-0 p-4 text-6xl opacity-20 transform translate-x-2 translate-y-2 group-hover:scale-110 transition"></span>
                 </a>
 
                 <a href="{{ route('kurikulum.level-3') }}" class="block group relative overflow-hidden rounded-2xl bg-purple-50 border border-purple-100 p-8 hover:bg-purple-100 transition cursor-pointer">
                     <h3 class="text-2xl font-bold text-black-800 mb-2">Level 3</h3>
-                    <p class="text-black-600 mb-6 text-sm">Pemantapan & Logika</p>
+                    <p class="text-black-600 mb-6 text-sm">Menulis Kalimat</p>
                     <span class="absolute bottom-0 right-0 p-4 text-6xl opacity-20 transform translate-x-2 translate-y-2 group-hover:scale-110 transition"></span>
                 </a>
 
                 <a href="{{ route('kurikulum.level-4') }}" class="block group relative overflow-hidden rounded-2xl bg-blue-50 border border-blue-100 p-8 hover:bg-blue-100 transition cursor-pointer">
                     <h3 class="text-2xl font-bold text-black-800 mb-2">Level 4</h3>
-                    <p class="text-black-600 mb-6 text-sm">Pemantapan & Logika Lanjutan</p>
+                    <p class="text-black-600 mb-6 text-sm">Membuat Karangan Sederhana</p>
                     <span class="absolute bottom-0 right-0 p-4 text-6xl opacity-20 transform translate-x-2 translate-y-2 group-hover:scale-110 transition"></span>
                 </a>
             </div>

@@ -30,12 +30,15 @@
                 <h2 class="text-lg font-bold text-black">Daftar Siswa Terbaru</h2>
                 <div class="flex items-center gap-2 w-full sm:w-auto">
                     <div class="flex space-x-3">
+                        <a href="{{ route('admin.create') }}" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition flex items-center shadow-sm">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                            Tambah Siswa Baru
+                        </a>
                         <a href="{{ route('admin.reports.csv') }}" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition flex items-center shadow-sm">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                             </svg>
                             Export Excel
-                        </a>
                         </a>
                         <form action="{{ route('admin.students.delete-all') }}" method="POST" onsubmit="return confirm('PERINGATAN KERAS!\n\nApakah Anda YAKIN ingin menghapus SELURUH data pendaftar?\nTindakan ini AKAN MENGHAPUS SEMUA SISWA dan TIDAK BISA DIBATALKAN!');" class="inline">
                             @csrf

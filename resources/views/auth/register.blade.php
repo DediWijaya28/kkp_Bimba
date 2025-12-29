@@ -13,10 +13,10 @@
                 <form action="{{ route('register.post') }}" method="POST" class="space-y-6">
                     @csrf
                     <div>
-                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap Orang Tua</label>
                         <input type="text" name="name" id="name" required 
                             class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 outline-none"
-                            placeholder="Nama Lengkap">
+                            placeholder="Nama Lengkap Orang Tua">
                         @error('name')
                             <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                         @enderror

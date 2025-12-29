@@ -50,16 +50,27 @@
 
         <!-- Dokumen & Garansi 
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-            <h3 class="text-lg font-bold text-gray-900 mb-4">Dokumen & Garansi</h3>
+            <h3 class="text-lg font-bold text-gray-900 mb-4">Dokumen & Bukti</h3> -->
+
+            @if($student->payment && $student->payment->registration_number)
+                <div class="mb-6 p-4 bg-indigo-50 border border-indigo-100 rounded-lg">
+                    <h4 class="text-sm font-bold text-indigo-900 mb-2">Bukti Pendaftaran & Pembayaran</h4>
+                    <p class="text-xs text-indigo-700 mb-3">Dokumen ini adalah bukti sah pendaftaran Anda.</p>
+                    <a href="{{ route('payment.print-proof', $student) }}" target="_blank" class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 transition">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        Download Bukti Pendaftaran (PDF)
+                    </a>
+                </div>
+            @endif
             
-            <div class="mb-6">
+           <!-- <div class="mb-6">
                 <h4 class="text-sm font-semibold text-gray-900 mb-2">Kartu Garansi</h4>
                 @if($student->warranty)
                     <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-100">
                         <div class="flex items-center">
                             <svg class="w-5 h-5 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             <span class="text-sm text-green-800">Disetujui pada {{ $student->warranty->signed_at->format('d M Y H:i') }}</span>
-                        </div> -->
+                        </div>
                         <button disabled class="text-xs text-gray-400 cursor-not-allowed">Download PDF</button>
                     </div>
                 @else
@@ -82,7 +93,7 @@
                     @if($student->documents->isEmpty())
                         <li class="text-gray-500 text-sm italic">Belum ada dokumen.</li>
                     @endif
-                </ul>
+                </ul> -->
             </div>
         </div>
     </div>

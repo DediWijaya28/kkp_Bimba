@@ -36,6 +36,158 @@ class AdminController extends Controller
         return view('admin.show', compact('student'));
     }
 
+    /**
+     * Resolve a region name by fetching EMSIFA JSON lists.
+     */
+    protected function resolveRegionName(string $pathSegment, $id)
+    {
+        try {
+            $url = "https://www.emsifa.com/api-wilayah-indonesia/api/{$pathSegment}.json";
+            $contents = @file_get_contents($url);
+            if (!$contents) return '';
+            $data = json_decode($contents, true);
+            if (!is_array($data)) return '';
+            foreach ($data as $item) {
+                if (isset($item['id']) && (string)$item['id'] === (string)$id) {
+                    return $item['name'] ?? '';
+                }
+            }
+        } catch (\Throwable $e) {
+            // ignore
+        }
+        return '';
+    }
+
+    public function create()
+    {
+        return view('admin.create');
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            // User Data
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8',
+            
+            // Student Data
+            'full_name' => 'required|string|max:255',
+            'nickname' => 'required|string|max:255',
+            'birth_place' => 'required|string|max:255',
+            'birth_date' => 'required|date',
+            'gender' => 'required|in:L,P',
+            'religion' => 'required|string|max:255',
+            
+            // Address Data
+            'province_id' => 'required|string',
+            'city_id' => 'required|string',
+            'district_id' => 'required|string',
+            'village_id' => 'required|string',
+            'street_address' => 'required|string',
+            'rt' => 'nullable|string|max:5',
+            'rw' => 'nullable|string|max:5',
+            'house_number' => 'nullable|string|max:20',
+            'postal_code' => 'nullable|string|max:10',
+            
+            // Parent Data
+            'father_name' => 'required|string|max:255',
+            'mother_name' => 'required|string|max:255',
+            'father_occupation' => 'required|string|max:255',
+            'father_phone' => 'required|string|max:20',
+            'mother_occupation' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            
+            // Region Names (hidden inputs)
+            'province_name' => 'nullable|string',
+            'city_name' => 'nullable|string',
+            'district_name' => 'nullable|string',
+            'village_name' => 'nullable|string',
+        ]);
+
+        // Attempt to resolve names from API if JS failed to populate hidden fields
+        try {
+            if (empty($validated['province_name']) && !empty($validated['province_id'])) {
+                $validated['province_name'] = $this->resolveRegionName('provinces', $validated['province_id']);
+            }
+            if (empty($validated['city_name']) && !empty($validated['city_id'])) {
+                $validated['city_name'] = $this->resolveRegionName("regencies/{$validated['province_id']}", $validated['city_id']);
+            }
+            if (empty($validated['district_name']) && !empty($validated['district_id'])) {
+                $validated['district_name'] = $this->resolveRegionName("districts/{$validated['city_id']}", $validated['district_id']);
+            }
+            if (empty($validated['village_name']) && !empty($validated['village_id'])) {
+                $validated['village_name'] = $this->resolveRegionName("villages/{$validated['district_id']}", $validated['village_id']);
+            }
+        } catch (\Throwable $e) {}
+
+        \Illuminate\Support\Facades\DB::transaction(function () use ($validated) {
+            // 1. Create User
+            $user = \App\Models\User::create([
+                'name' => $validated['full_name'],
+                'email' => $validated['email'],
+                'password' => \Illuminate\Support\Facades\Hash::make($validated['password']),
+                'role' => 'user',
+            ]);
+
+            // 2. Format Address
+            $parts = [$validated['street_address']];
+            if (!empty($validated['rt'])) $parts[] = "RT " . $validated['rt'];
+            if (!empty($validated['rw'])) $parts[] = "RW " . $validated['rw'];
+            if (!empty($validated['house_number'])) $parts[] = "No. " . $validated['house_number'];
+            $parts[] = $validated['village_name'];
+            $parts[] = $validated['district_name'];
+            $parts[] = $validated['city_name'];
+            $parts[] = $validated['province_name'];
+            if (!empty($validated['postal_code'])) $parts[] = "Kode Pos " . $validated['postal_code'];
+            
+            $fullAddress = implode(", ", array_filter($parts));
+
+            // 3. Create Student
+            $student = Student::create([
+                'user_id' => $user->id,
+                'full_name' => ucwords(strtolower($validated['full_name'])),
+                'nickname' => ucwords(strtolower($validated['nickname'])),
+                'birth_place' => ucwords(strtolower($validated['birth_place'])),
+                'birth_date' => $validated['birth_date'],
+                'gender' => $validated['gender'],
+                'religion' => $validated['religion'],
+                'address' => $fullAddress,
+                'province_id' => $validated['province_id'],
+                'city_id' => $validated['city_id'],
+                'district_id' => $validated['district_id'],
+                'village_id' => $validated['village_id'],
+                'street_address' => $validated['street_address'],
+                'rt' => $validated['rt'],
+                'rw' => $validated['rw'],
+                'house_number' => $validated['house_number'],
+                'postal_code' => $validated['postal_code'],
+                'status' => 'verified', // Admin created, so we assume verified/submitted
+            ]);
+
+            // 4. Create Placeholder Payment (so admin can update details later)
+            \App\Models\Payment::create([
+                'student_id' => $student->id,
+                'amount' => 0,
+                'payment_method' => 'cash', // Default to cash for manual admin entry
+                'status' => 'pending',
+                'registration_number' => null, // Will be filled by admin later or generated
+            ]);
+
+            // 5. Create Parent
+            \App\Models\StudentParent::create([
+                'student_id' => $student->id,
+                'father_name' => ucwords(strtolower($validated['father_name'])),
+                'mother_name' => ucwords(strtolower($validated['mother_name'])),
+                'father_occupation' => ucwords(strtolower($validated['father_occupation'])),
+                'father_phone' => $validated['father_phone'],
+                'mother_occupation' => ucwords(strtolower($validated['mother_occupation'])),
+                'phone' => $validated['phone'],
+            ]);
+        });
+
+        return redirect()->route('admin.dashboard')->with('success', 'Siswa berhasil ditambahkan. Silakan lanjutkan dengan pemilihan kelas jika diperlukan.');
+    }
+
     public function verify(Request $request, Student $student)
     {
         if ($student->status !== 'paid' && $request->status === 'verified') {
@@ -54,6 +206,14 @@ class AdminController extends Controller
         }
 
         $student->update($updateData);
+
+        // Also verify payment if exists
+        if ($student->payment && $request->status === 'verified') {
+            $student->payment->update([
+                'status' => 'verified',
+                'verified_at' => now(),
+            ]);
+        }
 
         // If rejected, maybe add a note to a specific document or general note?
         // For simplicity, we just update status. Ideally we'd have a 'notes' table or column on student.
@@ -97,7 +257,37 @@ class AdminController extends Controller
             'nim' => $request->nim,
         ]);
 
+        if ($student->payment) {
+            $student->payment->update([
+                'status' => 'verified',
+                'verified_at' => now(),
+            ]);
+        }
+
         return back()->with('success', 'Siswa berhasil diaktifkan.');
+    }
+
+    public function updatePaymentDetails(Request $request, Student $student)
+    {
+        $request->validate([
+            'registration_number' => 'required|string',
+            'registration_fee' => 'required|numeric|min:0',
+            'spp_fee' => 'required|numeric|min:0',
+            'authorized_signer' => 'nullable|string',
+        ]);
+
+        if (!$student->payment) {
+            return back()->with('error', 'Data pembayaran tidak ditemukan.');
+        }
+
+        $student->payment->update([
+            'registration_number' => $request->registration_number,
+            'registration_fee' => $request->registration_fee,
+            'spp_fee' => $request->spp_fee,
+            'authorized_signer' => $request->authorized_signer,
+        ]);
+
+        return back()->with('success', 'Rincian pembayaran berhasil diperbarui.');
     }
 
     public function edit(Student $student)

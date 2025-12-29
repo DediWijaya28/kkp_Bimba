@@ -8,6 +8,11 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
 </head>
 <body class="bg-[#FDFDFC] text-[#1b1b18] font-sans antialiased">
     
@@ -30,57 +35,416 @@
         </div>
     </header>
 
-    <main class="pt-32 pb-20 px-6 max-w-4xl mx-auto">
-        <div class="bg-orange-50 border border-orange-100 rounded-3xl p-8 md:p-12 mb-12">
-            <div class="flex items-center gap-4 mb-6">
-                <span class="text-6xl">🌿</span>
-                <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Kurikulum Level 2</h1>
-            </div>
-            <p class="text-xl text-gray-700 leading-relaxed">
-                Level pengembangan kemampuan membaca kata dan kalimat sederhana dengan lancar.
-            </p>
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-8 mb-16">
-            <div>
-                <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
-                    <span class="w-8 h-8 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center text-sm">01</span>
-                    Materi Pembelajaran
-                </h2>
-                <ul class="space-y-4 text-gray-600">
-                    <li class="flex items-start gap-3">
-                        <span class="text-green-500 font-bold">✓</span>
-                        Membaca kata 4 huruf.
-                    </li>
-                    <li class="flex items-start gap-3">
-                        <span class="text-green-500 font-bold">✓</span>
-                        Membaca kalimat sederhana.
-                    </li>
-                    <li class="flex items-start gap-3">
-                        <span class="text-green-500 font-bold">✓</span>
-                        Modul baca level 1-4.
-                    </li>
-                </ul>
-            </div>
-            <div>
-                <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
-                    <span class="w-8 h-8 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center text-sm">02</span>
-                    Tujuan
-                </h2>
-                <ul class="space-y-4 text-gray-600">
-                    <li class="flex items-start gap-3">
-                        <span class="text-green-500 font-bold">✓</span>
-                        Anak mampu membaca kata bermakna.
-                    </li>
-                    <li class="flex items-start gap-3">
-                        <span class="text-green-500 font-bold">✓</span>
-                        Tumbuhnya rasa percaya diri anak dalam membaca.
-                    </li>
-                </ul>
+    <main class="pt-32 pb-20 px-6 max-w-4xl mx-auto" x-data="{ activeAccordion: '1A' }">
+        <!-- Header Section -->
+        <div class="text-center mb-10">
+            <h1 class="text-5xl font-bold text-black mb-6">Level 2</h1>
+            <div class="text-left max-w-3xl mx-auto space-y-2">
+                <div class="flex items-start gap-2">
+                    <span class="text-red-500 text-xl transform -rotate-45">📌</span>
+                    <p class="font-bold text-black text-lg">Bertujuan mengenalkan bacaan paragraf sederhana pada anak</p>
+                </div>
+                <div class="flex items-start gap-2">
+                    <span class="text-red-500 text-xl transform -rotate-45">📌</span>
+                    <p class="font-bold text-black text-lg">Berfokus pada pengembangan minat dan kemampuan baca anak</p>
+                </div>
             </div>
         </div>
 
-        <div class="bg-white border border-gray-200 rounded-2xl p-8 text-center shadow-sm">
+        <!-- Accordions -->
+        <div class="space-y-4">
+            <!-- Modul Baca 3 -->
+            <div class="overflow-hidden rounded-2xl">
+                <button 
+                    @click="activeAccordion = activeAccordion === '3' ? null : '3'"
+                    class="w-full bg-[#67E8F9] hover:bg-[#22D3EE] transition-colors p-4 flex justify-between items-center text-left">
+                    <span class="font-bold text-xl text-black">MODUL BACA 3</span>
+                    <svg 
+                        class="w-6 h-6 transform transition-transform duration-200" 
+                        :class="activeAccordion === '3' ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div 
+                    x-show="activeAccordion === '3'" 
+                    x-collapse
+                    class="bg-[#be3a5f] text-white p-8 relative">
+                    <!-- Decorative edges roughly mimicking the wavy line in image if possible, but standard box is safer for now. -->
+                    <div class="flex flex-col md:flex-row gap-6 items-center">
+                        <div class="flex-1 space-y-6">
+                            <ul class="space-y-6">
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-1.5 w-2 h-2 bg-white rounded-full flex-shrink-0"></span>
+                                    <span class="font-bold leading-relaxed">
+                                       Bertujuan melatih cara membaca kata 5 sampai 6 huruf sederhana dengan ejaan bisik-bisik atau mengeja dalam hati.
+                                    </span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-1.5 w-2 h-2 bg-white rounded-full flex-shrink-0"></span>
+                                    <span class="font-bold leading-relaxed">
+                                        Diberikan apabila anak sudah memenuhi tujuan Level 1 atau sudah menyelesaikan Level 1 dengan baik.
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Placeholder for the image in the screenshot -->
+                        <div class="w-full md:w-1/3 bg-white/20 rounded-lg p-2 backdrop-blur-sm">
+                            <img src="{{ asset('images/modul-baca-3.png') }}" 
+                                 alt="Modul Baca 3" 
+                                 class="w-full h-full object-contain rounded bg-white">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modul Baca 4 -->
+            <div class="overflow-hidden rounded-2xl">
+                <button 
+                    @click="activeAccordion = activeAccordion === '4' ? null : '4'"
+                    class="w-full bg-[#67E8F9] hover:bg-[#22D3EE] transition-colors p-4 flex justify-between items-center text-left">
+                    <span class="font-bold text-xl text-black">MODUL BACA 4</span>
+                    <svg 
+                        class="w-6 h-6 transform transition-transform duration-200" 
+                        :class="activeAccordion === '4' ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div 
+                    x-show="activeAccordion === '4'" 
+                    x-collapse
+                    class="bg-[#be3a5f] text-white p-8">
+                    <div class="flex flex-col md:flex-row gap-6">
+                         <div class="flex-1">
+                            <ul class="space-y-4">
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-1.5 w-2 h-2 bg-white rounded-full flex-shrink-0"></span>
+                                    <span class="font-bold">
+                                        Bertujuan mengenalkan huruf kecil pada anak lewat kata 4 huruf sederhana.
+                                    </span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-1.5 w-2 h-2 bg-white rounded-full flex-shrink-0"></span>
+                                    <span class="font-bold">
+                                        Diberikan apabila anak sudah memenuhi tujuan modul Baca 3 dengan baik.
+                                    </span>
+                                </li>
+                            </ul>
+                         </div>
+                          <div class="w-full md:w-1/3 bg-white/20 rounded-lg p-2 backdrop-blur-sm">
+                            <img src="{{ asset('images/modul-baca-4.png') }}" 
+                                 alt="Modul Baca 4" 
+                                 class="w-full h-full object-contain rounded bg-white">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modul Baca 5 -->
+            <div class="overflow-hidden rounded-2xl">
+                <button 
+                    @click="activeAccordion = activeAccordion === '5' ? null : '5'"
+                    class="w-full bg-[#67E8F9] hover:bg-[#22D3EE] transition-colors p-4 flex justify-between items-center text-left">
+                    <span class="font-bold text-xl text-black">MODUL BACA 5</span>
+                    <svg 
+                        class="w-6 h-6 transform transition-transform duration-200" 
+                        :class="activeAccordion === '5' ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div 
+                    x-show="activeAccordion === '5'" 
+                    x-collapse
+                    class="bg-[#be3a5f] text-white p-8">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="flex-1">
+                           <ul class="space-y-4">
+                               <li class="flex items-start gap-3">
+                                   <span class="mt-1.5 w-2 h-2 bg-white rounded-full flex-shrink-0"></span>
+                                   <span class="font-bold">
+                                       Bertujuan melatih cara membaca huruf kecil pada anak lewat kata 5 sampai 6 huruf sederhana. 
+                                   </span>
+                               </li>
+                               <li class="flex items-start gap-3">
+                                   <span class="mt-1.5 w-2 h-2 bg-white rounded-full flex-shrink-0"></span>
+                                   <span class="font-bold">
+                                       Diberikan apabila anak sudah memenuhi tujuan modul Baca 4 dengan baik.
+                                   </span>
+                               </li>
+                           </ul>
+                        </div>
+                         <div class="w-full md:w-1/3 bg-white/20 rounded-lg p-2 backdrop-blur-sm">
+                            <img src="{{ asset('images/modul-baca-5.png') }}" 
+                                 alt="Modul Baca 5" 
+                                 class="w-full h-full object-contain rounded bg-white">
+                        </div>
+                   </div>
+                </div>
+            </div>
+
+            <!-- Modul Baca 6 -->
+            <div class="overflow-hidden rounded-2xl">
+                <button 
+                    @click="activeAccordion = activeAccordion === '6' ? null : '6'"
+                    class="w-full bg-[#67E8F9] hover:bg-[#22D3EE] transition-colors p-4 flex justify-between items-center text-left">
+                    <span class="font-bold text-xl text-black">MODUL BACA 6</span>
+                    <svg 
+                        class="w-6 h-6 transform transition-transform duration-200" 
+                        :class="activeAccordion === '6' ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div 
+                    x-show="activeAccordion === '6'" 
+                    x-collapse
+                    class="bg-[#be3a5f] text-white p-8">
+                    <div class="flex flex-col md:flex-row gap-6">
+                         <div class="flex-1">
+                            <ul class="space-y-4">
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-1.5 w-2 h-2 bg-white rounded-full flex-shrink-0"></span>
+                                    <span class="font-bold">
+                                        Bertujuan mengenalkan anak pada kalimat sederhana 2 sampai 4 kata yang terdiri dari 4 huruf dan mengasah daya nalar anak lewat 2 opsi jawaban yang harus dipilih salah satu.
+                                    </span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-1.5 w-2 h-2 bg-white rounded-full flex-shrink-0"></span>
+                                    <span class="font-bold">
+                                        Diberikan apabila anak sudah memenuhi tujuan modul Baca 5 dengan baik.
+                                    </span>
+                                </li>
+                            </ul>
+                         </div>
+                          <div class="w-full md:w-1/3 bg-white/20 rounded-lg p-2 backdrop-blur-sm">
+                            <img src="{{ asset('images/modul-baca-6.png') }}" 
+                                 alt="Modul Baca 6" 
+                                 class="w-full h-full object-contain rounded bg-white">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modul Baca 7 -->
+            <div class="overflow-hidden rounded-2xl">
+                <button 
+                    @click="activeAccordion = activeAccordion === '7' ? null : '7'"
+                    class="w-full bg-[#67E8F9] hover:bg-[#22D3EE] transition-colors p-4 flex justify-between items-center text-left">
+                    <span class="font-bold text-xl text-black">MODUL BACA 7</span>
+                    <svg 
+                        class="w-6 h-6 transform transition-transform duration-200" 
+                        :class="activeAccordion === '7' ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div 
+                    x-show="activeAccordion === '7'" 
+                    x-collapse
+                    class="bg-[#be3a5f] text-white p-8">
+                    <div class="flex flex-col md:flex-row gap-6">
+                         <div class="flex-1">
+                            <ul class="space-y-4">
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-1.5 w-2 h-2 bg-white rounded-full flex-shrink-0"></span>
+                                    <span class="font-bold">
+                                        Bertujuan mengenalkan anak pada kalimat sederhana 2 sampai 4 kata yang terdiri dari 5 huruf dan mengasah daya nalar anak lewat 2 opsi jawaban yang harus dipilih salah satu.
+                                    </span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-1.5 w-2 h-2 bg-white rounded-full flex-shrink-0"></span>
+                                    <span class="font-bold">
+                                        Diberikan apabila anak sudah memenuhi tujuan modul Baca 6 dengan baik.
+                                    </span>
+                                </li>
+                            </ul>
+                         </div>
+                          <div class="w-full md:w-1/3 bg-white/20 rounded-lg p-2 backdrop-blur-sm">
+                            <img src="{{ asset('images/modul-baca-7.png') }}" 
+                                 alt="Modul Baca 7" 
+                                 class="w-full h-full object-contain rounded bg-white">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modul Baca 8 -->
+            <div class="overflow-hidden rounded-2xl">
+                <button 
+                    @click="activeAccordion = activeAccordion === '8' ? null : '8'"
+                    class="w-full bg-[#67E8F9] hover:bg-[#22D3EE] transition-colors p-4 flex justify-between items-center text-left">
+                    <span class="font-bold text-xl text-black">MODUL BACA 8</span>
+                    <svg 
+                        class="w-6 h-6 transform transition-transform duration-200" 
+                        :class="activeAccordion === '8' ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div 
+                    x-show="activeAccordion === '8'" 
+                    x-collapse
+                    class="bg-[#be3a5f] text-white p-8">
+                    <div class="flex flex-col md:flex-row gap-6">
+                         <div class="flex-1">
+                            <ul class="space-y-4">
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-1.5 w-2 h-2 bg-white rounded-full flex-shrink-0"></span>
+                                    <span class="font-bold">
+                                        Bertujuan mengenalkan anak pada kalimat sederhana 2 sampai 3 kata yang terdiri dari 3 sampai 5 huruf besar dan mengasah daya nalar anak lewat 4 opsi jawaban yang harus dipilih satu per satu.
+                                    </span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-1.5 w-2 h-2 bg-white rounded-full flex-shrink-0"></span>
+                                    <span class="font-bold">
+                                        Diberikan apabila anak sudah memenuhi tujuan modul Baca 7 dengan baik.
+                                    </span>
+                                </li>
+                            </ul>
+                         </div>
+                          <div class="w-full md:w-1/3 bg-white/20 rounded-lg p-2 backdrop-blur-sm">
+                            <img src="{{ asset('images/modul-baca-8.png') }}" 
+                                 alt="Modul Baca 8" 
+                                 class="w-full h-full object-contain rounded bg-white">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modul Baca 9 -->
+            <div class="overflow-hidden rounded-2xl">
+                <button 
+                    @click="activeAccordion = activeAccordion === '9' ? null : '9'"
+                    class="w-full bg-[#67E8F9] hover:bg-[#22D3EE] transition-colors p-4 flex justify-between items-center text-left">
+                    <span class="font-bold text-xl text-black">MODUL BACA 9</span>
+                    <svg 
+                        class="w-6 h-6 transform transition-transform duration-200" 
+                        :class="activeAccordion === '9' ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div 
+                    x-show="activeAccordion === '9'" 
+                    x-collapse
+                    class="bg-[#be3a5f] text-white p-8">
+                    <div class="flex flex-col md:flex-row gap-6">
+                         <div class="flex-1">
+                            <ul class="space-y-4">
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-1.5 w-2 h-2 bg-white rounded-full flex-shrink-0"></span>
+                                    <span class="font-bold">
+                                        Bertujuan mengenalkan anak pada kalimat sederhana 2 sampai 3 kata yang terdiri dari 3 sampai 5 huruf kecil dan mengasah daya nalar anak lewat 4 opsi jawaban yang harus dipilih satu per satu.
+                                    </span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-1.5 w-2 h-2 bg-white rounded-full flex-shrink-0"></span>
+                                    <span class="font-bold">
+                                        Diberikan apabila anak sudah memenuhi tujuan modul Baca 8 dengan baik.
+                                    </span>
+                                </li>
+                            </ul>
+                         </div>
+                          <div class="w-full md:w-1/3 bg-white/20 rounded-lg p-2 backdrop-blur-sm">
+                            <img src="{{ asset('images/modul-baca-9.png') }}" 
+                                 alt="Modul Baca 9" 
+                                 class="w-full h-full object-contain rounded bg-white">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modul Baca 10 -->
+            <div class="overflow-hidden rounded-2xl">
+                <button 
+                    @click="activeAccordion = activeAccordion === '10' ? null : '10'"
+                    class="w-full bg-[#67E8F9] hover:bg-[#22D3EE] transition-colors p-4 flex justify-between items-center text-left">
+                    <span class="font-bold text-xl text-black">MODUL BACA 10</span>
+                    <svg 
+                        class="w-6 h-6 transform transition-transform duration-200" 
+                        :class="activeAccordion === '10' ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div 
+                    x-show="activeAccordion === '10'" 
+                    x-collapse
+                    class="bg-[#be3a5f] text-white p-8">
+                    <div class="flex flex-col md:flex-row gap-6">
+                         <div class="flex-1">
+                            <ul class="space-y-4">
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-1.5 w-2 h-2 bg-white rounded-full flex-shrink-0"></span>
+                                    <span class="font-bold">
+                                        Bertujuan mengenalkan anak pada kalimat sederhana 3 kata yang mengandung SPO (subjek, predikat, objek) dan mengasah daya nalar anak lewat 2 opsi jawaban yang harus dipilih salah satu.
+                                    </span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-1.5 w-2 h-2 bg-white rounded-full flex-shrink-0"></span>
+                                    <span class="font-bold">
+                                        Diberikan apabila anak sudah memenuhi tujuan modul Baca 9 dengan baik.
+                                    </span>
+                                </li>
+                            </ul>
+                         </div>
+                          <div class="w-full md:w-1/3 bg-white/20 rounded-lg p-2 backdrop-blur-sm">
+                            <img src="{{ asset('images/modul-baca-10.png') }}" 
+                                 alt="Modul Baca 10" 
+                                 class="w-full h-full object-contain rounded bg-white">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Modul Baca 11 -->
+            <div class="overflow-hidden rounded-2xl">
+                <button 
+                    @click="activeAccordion = activeAccordion === '11' ? null : '11'"
+                    class="w-full bg-[#67E8F9] hover:bg-[#22D3EE] transition-colors p-4 flex justify-between items-center text-left">
+                    <span class="font-bold text-xl text-black">MODUL BACA 11</span>
+                    <svg 
+                        class="w-6 h-6 transform transition-transform duration-200" 
+                        :class="activeAccordion === '11' ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div 
+                    x-show="activeAccordion === '11'" 
+                    x-collapse
+                    class="bg-[#be3a5f] text-white p-8">
+                    <div class="flex flex-col md:flex-row gap-6">
+                         <div class="flex-1">
+                            <ul class="space-y-4">
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-1.5 w-2 h-2 bg-white rounded-full flex-shrink-0"></span>
+                                    <span class="font-bold">
+                                        Bertujuan mengenalkan anak pada paragraf sederhana dan mengasah daya nalar anak lewat soal pilihan ganda dari paragraf tersebut.
+                                    </span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-1.5 w-2 h-2 bg-white rounded-full flex-shrink-0"></span>
+                                    <span class="font-bold">
+                                        Diberikan apabila anak sudah memenuhi tujuan modul Baca 10 dengan baik.
+                                    </span>
+                                </li>
+                            </ul>
+                         </div>
+                          <div class="w-full md:w-1/3 bg-white/20 rounded-lg p-2 backdrop-blur-sm">
+                            <img src="{{ asset('images/modul-baca-11.png') }}" 
+                                 alt="Modul Baca 11" 
+                                 class="w-full h-full object-contain rounded bg-white">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-16 bg-white border border-gray-200 rounded-2xl p-8 text-center shadow-sm">
             <h3 class="text-2xl font-bold mb-4">Ingin Tahu Lebih Lanjut?</h3>
             <p class="text-gray-600 mb-8">Hubungi kami untuk konsultasi mengenai perkembangan buah hati Anda.</p>
             <div class="flex justify-center gap-4">

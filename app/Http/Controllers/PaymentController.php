@@ -64,4 +64,25 @@ class PaymentController extends Controller
 
         return redirect()->route('dashboard')->with('success', $message);
     }
+
+    public function printProof(Student $student)
+    {
+        // Allow student's owner OR admin to view
+        if (Auth::id() !== $student->user_id && Auth::user()->role !== 'admin') {
+            abort(403);
+        }
+
+        if (!$student->payment || !$student->payment->registration_number) {
+            return back()->with('error', 'Bukti pendaftaran belum diterbitkan oleh admin.');
+        }
+
+        $payment = $student->payment;
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.payment_proof', compact('student', 'payment'));
+        
+        // Set paper size if needed, default is A4
+        $pdf->setPaper('A4', 'portrait');
+
+        $filename = 'Bukti-Pendaftaran-' . \Illuminate\Support\Str::slug($student->full_name) . '.pdf';
+        return $pdf->stream($filename);
+    }
 }

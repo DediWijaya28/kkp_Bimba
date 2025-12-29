@@ -121,7 +121,13 @@
                                 <li class="flex items-start gap-3">
                                     <span class="mt-1.5 w-2 h-2 bg-white rounded-full flex-shrink-0"></span>
                                     <span class="font-bold">
-                                        Pengenalan huruf J, L, N, T, R, C dan kata-kata sederhana lainnya dengan metode yang menyenangkan.
+                                        Bertujuan mengenalkan huruf J, L, N, T, R, C dan cara membaca kata 4 huruf sederhana seperti kata: BUKU, KUDA, DAGU, BATU, JARI, TOPI, PITA, dan lain sebagainya.
+                                    </span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-1.5 w-2 h-2 bg-white rounded-full flex-shrink-0"></span>
+                                    <span class="font-bold">
+                                        Diberikan apabila anak sudah memenuhi tujuan modul Baca 1A dengan baik.
                                     </span>
                                 </li>
                             </ul>
@@ -158,7 +164,13 @@
                                <li class="flex items-start gap-3">
                                    <span class="mt-1.5 w-2 h-2 bg-white rounded-full flex-shrink-0"></span>
                                    <span class="font-bold">
-                                       Lanjutan pengenalan susunan huruf yang lebih kompleks untuk mempersiapkan kemampuan membaca kalimat.
+                                       Bertujuan melatih cara membaca kata 4 huruf sederhana seperti kata: SAPU, SAPI, SATU, dan lain sebagainya. 
+                                   </span>
+                               </li>
+                               <li class="flex items-start gap-3">
+                                   <span class="mt-1.5 w-2 h-2 bg-white rounded-full flex-shrink-0"></span>
+                                   <span class="font-bold">
+                                       Diberikan apabila anak sudah memenuhi tujuan modul Baca 1B dengan baik.
                                    </span>
                                </li>
                            </ul>
@@ -169,6 +181,92 @@
                                  class="w-full h-full object-contain rounded bg-white">
                         </div>
                    </div>
+                </div>
+            </div>
+
+            <!-- Modul Baca 1D -->
+            <div class="overflow-hidden rounded-2xl">
+                <button 
+                    @click="activeAccordion = activeAccordion === '1D' ? null : '1D'"
+                    class="w-full bg-[#67E8F9] hover:bg-[#22D3EE] transition-colors p-4 flex justify-between items-center text-left">
+                    <span class="font-bold text-xl text-black">MODUL BACA 1D</span>
+                    <svg 
+                        class="w-6 h-6 transform transition-transform duration-200" 
+                        :class="activeAccordion === '1D' ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div 
+                    x-show="activeAccordion === '1D'" 
+                    x-collapse
+                    class="bg-[#be3a5f] text-white p-8">
+                    <div class="flex flex-col md:flex-row gap-6">
+                         <div class="flex-1">
+                            <ul class="space-y-4">
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-1.5 w-2 h-2 bg-white rounded-full flex-shrink-0"></span>
+                                    <span class="font-bold">
+                                        Bertujuan melatih cara membaca kata 5 huruf sederhana seperti kata: BALON, POHON, BULAN, dan lain sebagainya. 
+                                    </span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-1.5 w-2 h-2 bg-white rounded-full flex-shrink-0"></span>
+                                    <span class="font-bold">
+                                        Diberikan apabila anak sudah memenuhi tujuan modul Baca 1C dengan baik.
+                                    </span>
+                                </li>
+                            </ul>
+                         </div>
+                          <div class="w-full md:w-1/3 bg-white/20 rounded-lg p-2 backdrop-blur-sm">
+                            <img src="{{ asset('images/modul-baca-1d.png') }}" 
+                                 alt="Modul Baca 1D" 
+                                 class="w-full h-full object-contain rounded bg-white">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modul Baca 2 -->
+            <div class="overflow-hidden rounded-2xl">
+                <button 
+                    @click="activeAccordion = activeAccordion === '2' ? null : '2'"
+                    class="w-full bg-[#67E8F9] hover:bg-[#22D3EE] transition-colors p-4 flex justify-between items-center text-left">
+                    <span class="font-bold text-xl text-black">MODUL BACA 2</span>
+                    <svg 
+                        class="w-6 h-6 transform transition-transform duration-200" 
+                        :class="activeAccordion === '2' ? 'rotate-180' : ''"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div 
+                    x-show="activeAccordion === '2'" 
+                    x-collapse
+                    class="bg-[#be3a5f] text-white p-8">
+                    <div class="flex flex-col md:flex-row gap-6">
+                         <div class="flex-1">
+                            <ul class="space-y-4">
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-1.5 w-2 h-2 bg-white rounded-full flex-shrink-0"></span>
+                                    <span class="font-bold">
+                                        Bertujuan mengenalkan cara membaca kata 4 huruf sederhana dengan ejaan bisik-bisik atau mengeja dalam hati. 
+                                    </span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="mt-1.5 w-2 h-2 bg-white rounded-full flex-shrink-0"></span>
+                                    <span class="font-bold">
+                                        Diberikan apabila anak sudah memenuhi tujuan modul Baca 1D dengan baik.
+                                    </span>
+                                </li>
+                            </ul>
+                         </div>
+                          <div class="w-full md:w-1/3 bg-white/20 rounded-lg p-2 backdrop-blur-sm">
+                            <img src="{{ asset('images/modul-baca-2.png') }}" 
+                                 alt="Modul Baca 2" 
+                                 class="w-full h-full object-contain rounded bg-white">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

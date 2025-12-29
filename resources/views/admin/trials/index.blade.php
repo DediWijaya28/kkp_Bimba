@@ -73,6 +73,13 @@
                                         <option value="registered" {{ $trial->status == 'registered' ? 'selected' : '' }}>Sudah Daftar</option>
                                     </select>
                                 </form>
+                                <form action="{{ route('admin.trials.destroy', $trial) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-xs bg-red-50 text-red-700 px-3 py-1 rounded-full border border-red-200 hover:bg-red-100">
+                                        Hapus
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>

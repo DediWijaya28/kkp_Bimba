@@ -59,37 +59,34 @@ class RegistrationController extends Controller
 
     public function storeStep1(Request $request)
     {
-        $isDraft = $request->input('action') === 'draft';
-        
         try {
             $rules = [
                 'student_id' => 'nullable|exists:students,id',
                 'full_name' => 'required|string|max:255',
-                'nickname' => $isDraft ? 'nullable|string|max:255' : 'required|string|max:255',
-                'birth_place' => $isDraft ? 'nullable|string|max:255' : 'required|string|max:255',
-                'birth_date' => $isDraft ? 'nullable|date' : 'required|date',
-                'gender' => $isDraft ? 'nullable|in:L,P' : 'required|in:L,P',
-                'religion' => $isDraft ? 'nullable|string|max:255' : 'required|string|max:255',
+                'nickname' => 'required|string|max:255',
+                'birth_place' => 'required|string|max:255',
+                'birth_date' => 'required|date',
+                'gender' => 'required|in:L,P',
+                'religion' => 'required|string|max:255',
                 // Address fields
-                'province_id' => $isDraft ? 'nullable' : 'required|string',
-                'city_id' => $isDraft ? 'nullable' : 'required|string',
-                'district_id' => $isDraft ? 'nullable' : 'required|string',
-                'village_id' => $isDraft ? 'nullable' : 'required|string',
-                'street_address' => $isDraft ? 'nullable|string' : 'required|string',
+                'province_id' => 'required|string',
+                'city_id' => 'required|string',
+                'district_id' => 'required|string',
+                'village_id' => 'required|string',
+                'street_address' => 'required|string',
                 'rt' => 'nullable|string|max:5',
                 'rw' => 'nullable|string|max:5',
                 'house_number' => 'nullable|string|max:20',
                 'postal_code' => 'nullable|string|max:10',
                 // Parent fields
-                'father_name' => $isDraft ? 'nullable|string|max:255' : 'required|string|max:255',
-                'mother_name' => $isDraft ? 'nullable|string|max:255' : 'required|string|max:255',
-                'father_occupation' => $isDraft ? 'nullable|string|max:255' : 'required|string|max:255',
-                'father_phone' => $isDraft ? 'nullable|string|max:20' : 'required|string|max:20',
-                'mother_occupation' => $isDraft ? 'nullable|string|max:255' : 'required|string|max:255',
-                'phone' => $isDraft ? 'nullable|string|max:20' : 'required|string|max:20',
+                'father_name' => 'required|string|max:255',
+                'mother_name' => 'required|string|max:255',
+                'father_occupation' => 'required|string|max:255',
+                'father_phone' => 'required|string|max:20',
+                'mother_occupation' => 'required|string|max:255',
+                'phone' => 'required|string|max:20',
             ];
 
-            // If draft, remove required from dependent fields if not present
             $validated = $request->validate($rules);
             
             // Add non-validated name fields manually if present
@@ -123,7 +120,7 @@ class RegistrationController extends Controller
             // If lookup fails, leave the names as-is; validation already passed for IDs.
         }
 
-        $student = DB::transaction(function () use ($validated, $isDraft) {
+        $student = DB::transaction(function () use ($validated) {
             // Format address: Street, RT/RW, House No, Village, District, City, Province
             $parts = [$validated['street_address'] ?? ''];
             if (!empty($validated['rt'])) $parts[] = "RT " . $validated['rt'];
@@ -180,10 +177,6 @@ class RegistrationController extends Controller
 
             return $student;
         });
-
-        if ($isDraft) {
-            return redirect()->route('dashboard')->with('success', 'Data berhasil disimpan sebagai draft.');
-        }
 
         // Check if student has payment history to restore status
         if ($student->payment && $student->payment->status === 'verified') {

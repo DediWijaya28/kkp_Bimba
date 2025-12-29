@@ -6,6 +6,7 @@ use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClassController;
+use App\Http\Controllers\TrialController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -51,8 +52,6 @@ Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 
-    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-    Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 
     // Password Reset Routes
     Route::get('/forgot-password', [AuthController::class, 'showLinkRequestForm'])->name('password.request');
@@ -81,12 +80,15 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/payment/{student}', [PaymentController::class, 'index'])->name('payment.index');
     Route::post('/payment/{student}', [PaymentController::class, 'store'])->name('payment.store');
+    Route::get('/payment/{student}/proof', [PaymentController::class, 'printProof'])->name('payment.print-proof');
 
     Route::get('/my-student/{student}', [StudentController::class, 'show'])->name('student.show');
 });
 
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+    Route::get('/student/create', [AdminController::class, 'create'])->name('create');
+    Route::post('/student/store', [AdminController::class, 'store'])->name('store');
     Route::get('/student/{student}', [AdminController::class, 'show'])->name('show');
     Route::get('/student/{student}/edit', [AdminController::class, 'edit'])->name('edit');
     Route::put('/student/{student}', [AdminController::class, 'update'])->name('update');
@@ -94,6 +96,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::delete('/student/{student}', [AdminController::class, 'destroy'])->name('destroy');
     Route::post('/student/{student}/verify', [AdminController::class, 'verify'])->name('verify');
     Route::post('/student/{student}/validate-payment', [AdminController::class, 'validatePayment'])->name('validatePayment');
+    Route::put('/student/{student}/payment-details', [AdminController::class, 'updatePaymentDetails'])->name('updatePaymentDetails');
     Route::post('/student/{student}/activate', [AdminController::class, 'activate'])->name('activate');
     
     Route::get('/classes', [ClassController::class, 'index'])->name('classes.index');
@@ -108,12 +111,13 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::delete('/students/delete-all', [AdminController::class, 'deleteAll'])->name('students.delete-all');
     
     // Trial Management
-    Route::get('/trials', [App\Http\Controllers\TrialController::class, 'index'])->name('trials.index');
-    Route::put('/trials/{trial}', [App\Http\Controllers\TrialController::class, 'update'])->name('trials.update');
+    Route::get('/trials', [TrialController::class, 'index'])->name('trials.index');
+    Route::put('/trials/{trial}', [TrialController::class, 'update'])->name('trials.update');
+    Route::delete('/trials/{trial}', [TrialController::class, 'destroy'])->name('trials.destroy');
 });
 
 // Public Trial Routes
-Route::get('/trial/register', [App\Http\Controllers\TrialController::class, 'create'])->name('trial.create');
-Route::post('/trial/register', [App\Http\Controllers\TrialController::class, 'store'])->name('trial.store');
-Route::get('/trial/success', [App\Http\Controllers\TrialController::class, 'success'])->name('trial.success');
+Route::get('/trial/register', [TrialController::class, 'create'])->name('trial.create');
+Route::post('/trial/register', [TrialController::class, 'store'])->name('trial.store');
+Route::get('/trial/success', [TrialController::class, 'success'])->name('trial.success');
 
