@@ -63,21 +63,6 @@
                 </div>
             @endif
             
-           <!-- <div class="mb-6">
-                <h4 class="text-sm font-semibold text-gray-900 mb-2">Kartu Garansi</h4>
-                @if($student->warranty)
-                    <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-100">
-                        <div class="flex items-center">
-                            <svg class="w-5 h-5 text-green-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <span class="text-sm text-green-800">Disetujui pada {{ $student->warranty->signed_at->format('d M Y H:i') }}</span>
-                        </div>
-                        <button disabled class="text-xs text-gray-400 cursor-not-allowed">Download PDF</button>
-                    </div>
-                @else
-                    <div class="text-sm text-gray-500 italic">Belum disetujui</div>
-                @endif
-            </div>
-
             <div>
                 <h4 class="text-sm font-semibold text-gray-900 mb-2">File Upload</h4>
                 <ul class="space-y-2">

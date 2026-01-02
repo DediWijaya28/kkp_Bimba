@@ -173,7 +173,7 @@
                             </a>
                         </div>
                     @endif
-
+                    
                     <!-- Admin Payment Details Form -->
                     <div class="border-t border-indigo-200 pt-4 mt-4">
                         <h4 class="text-md font-bold text-indigo-900 mb-3">Rincian Bukti Pendaftaran</h4>

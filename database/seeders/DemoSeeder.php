@@ -84,13 +84,7 @@ class DemoSeeder extends Seeder
             ]
         );
         
-        // Create dummy warranty for verified student
-        \App\Models\Warranty::create([
-            'student_id' => $studentVerified->id,
-            'signed_at' => now(),
-            'ip_address' => '127.0.0.1',
-            'user_agent' => 'Demo Seeder',
-        ]);
+        // Warranty creation removed
         
         // Create dummy documents for verified student
         \App\Models\Document::create(['student_id' => $studentVerified->id, 'type' => 'akta', 'path' => 'demo/akta.jpg', 'status' => 'approved']);

@@ -22,35 +22,38 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
 
-        // Log only non-sensitive metadata (never log passwords or full user objects)
-        \Illuminate\Support\Facades\Log::info('Login attempt', ['email' => $credentials['email'], 'remember' => $request->boolean('remember')]);
+        if (\Illuminate\Support\Facades\RateLimiter::tooManyAttempts($this->throttleKey($request), 5)) {
+            $seconds = \Illuminate\Support\Facades\RateLimiter::availableIn($this->throttleKey($request));
 
-        $user = User::where('email', $credentials['email'])->first();
-        $hashCheck = $user ? Hash::check($credentials['password'], $user->password) : false;
-        $authAttempt = Auth::attempt($credentials, $request->boolean('remember'));
+            throw \Illuminate\Validation\ValidationException::withMessages([
+                'email' => trans('auth.throttle', [
+                    'seconds' => $seconds,
+                    'minutes' => ceil($seconds / 60),
+                ]),
+            ]);
+        }
 
-        \Illuminate\Support\Facades\Log::info('Login debug', [
-            'user_found' => !!$user,
-            'user_id' => $user ? $user->id : null,
-            'hash_check' => $hashCheck,
-            'auth_attempt' => $authAttempt,
-        ]);
-
-        if ($authAttempt) {
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
+            \Illuminate\Support\Facades\RateLimiter::clear($this->throttleKey($request));
             return redirect()->intended('/');
         }
 
-        \Illuminate\Support\Facades\Log::warning('Login failed', [
-            'email' => $credentials['email'],
-            'user_found' => !!$user,
-            'hash_check' => $hashCheck,
-            'auth_attempt' => $authAttempt,
-        ]);
+        \Illuminate\Support\Facades\RateLimiter::hit($this->throttleKey($request));
 
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ])->onlyInput('email');
+    }
+
+    /**
+     * Get the rate limiting throttle key for the request.
+     *
+     * @return string
+     */
+    public function throttleKey(Request $request)
+    {
+        return Str::transliterate(Str::lower($request->input('email')).'|'.$request->ip());
     }
 
     public function showRegister()

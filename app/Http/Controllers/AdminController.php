@@ -32,7 +32,7 @@ class AdminController extends Controller
 
     public function show(Student $student)
     {
-        $student->load(['parent', 'warranty', 'documents', 'user']);
+        $student->load(['parent', 'documents', 'user']);
         return view('admin.show', compact('student'));
     }
 
@@ -43,13 +43,17 @@ class AdminController extends Controller
     {
         try {
             $url = "https://www.emsifa.com/api-wilayah-indonesia/api/{$pathSegment}.json";
-            $contents = @file_get_contents($url);
-            if (!$contents) return '';
-            $data = json_decode($contents, true);
-            if (!is_array($data)) return '';
-            foreach ($data as $item) {
-                if (isset($item['id']) && (string)$item['id'] === (string)$id) {
-                    return $item['name'] ?? '';
+            // Use Http facade for safer and more robust request
+            $response = \Illuminate\Support\Facades\Http::timeout(5)->get($url);
+            
+            if ($response->successful()) {
+                $data = $response->json();
+                if (is_array($data)) {
+                    foreach ($data as $item) {
+                        if (isset($item['id']) && (string)$item['id'] === (string)$id) {
+                            return $item['name'] ?? '';
+                        }
+                    }
                 }
             }
         } catch (\Throwable $e) {

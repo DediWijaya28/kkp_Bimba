@@ -45,10 +45,7 @@ class Student extends Model
         return $this->hasOne(StudentParent::class);
     }
 
-    public function warranty()
-    {
-        return $this->hasOne(Warranty::class);
-    }
+    // Warranty relationship removed
 
     public function documents()
     {

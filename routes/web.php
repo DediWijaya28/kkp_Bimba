@@ -85,7 +85,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/my-student/{student}', [StudentController::class, 'show'])->name('student.show');
 });
 
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
     Route::get('/student/create', [AdminController::class, 'create'])->name('create');
     Route::post('/student/store', [AdminController::class, 'store'])->name('store');
@@ -103,6 +103,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::post('/classes', [ClassController::class, 'store'])->name('classes.store');
     Route::get('/classes/{class}/edit', [ClassController::class, 'edit'])->name('classes.edit');
     Route::put('/classes/{class}', [ClassController::class, 'update'])->name('classes.update');
+    Route::delete('/classes/delete-all', [ClassController::class, 'destroyAll'])->name('classes.destroy-all');
     Route::delete('/classes/{class}', [ClassController::class, 'destroy'])->name('classes.destroy');
     
 

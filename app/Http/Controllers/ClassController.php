@@ -60,4 +60,16 @@ class ClassController extends Controller
         $class->delete();
         return back()->with('success', 'Kelas berhasil dihapus.');
     }
+    public function destroyAll()
+    {
+        // Check if any class has students
+        $hasStudents = SchoolClass::whereHas('selections')->exists();
+
+        if ($hasStudents) {
+            return back()->with('error', 'Tidak dapat menghapus semua kelas karena ada kelas yang masih memiliki pendaftar. Harap bersihkan pendaftar terlebih dahulu.');
+        }
+
+        SchoolClass::query()->delete();
+        return back()->with('success', 'Semua kelas berhasil dihapus.');
+    }
 }

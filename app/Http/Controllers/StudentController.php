@@ -12,7 +12,7 @@ class StudentController extends Controller
     {
         if ($student->user_id !== Auth::id()) abort(403);
         
-        $student->load(['documents', 'warranty', 'payment']);
+        $student->load(['documents', 'payment']);
         return view('student.show', compact('student'));
     }
 }

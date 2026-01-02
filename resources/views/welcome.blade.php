@@ -19,7 +19,7 @@
             overflow: hidden;
         }
         #mobile-menu.open {
-            max-height: 400px; /* Cukup untuk menampung menu */
+            max-height: 100vh; /* Gunakan 100vh agar aman */
         }
     </style>
 </head>
@@ -31,8 +31,8 @@
                 <div class="flex items-center gap-3">
                     <img src="{{ asset('images/logo-bimba1.png') }}?v=2" 
                          alt="Logo" 
-                         class="h-18 w-auto object-contain">
-                    <span class="font-bold text-2xl text-[#1b1b18]"  style="font-family: 'Comic Sans MS', 'Comic Sans', cursive;">
+                         class="h-12 md:h-20 w-auto object-contain">
+                    <span class="font-bold text-lg md:text-2xl text-[#1b1b18]"  style="font-family: 'Comic Sans MS', 'Comic Sans', cursive;">
                         <span class="text-[#0337f5]">b</span><span class="text-[#0337f5]">i</span><span class="text-[#f50303]">M</span><span class="text-[#0337f5]">B</span><span class="text-[#0337f5]">A</span>
                         <span class="text-[#f50303]">A</span><span class="text-[#e9f503]">I</span><span class="text-[#0337f5]">U</span><span class="text-[#0f7002]">E</span><span class="text-[#ed912f]">O</span>
                     </span>
@@ -89,10 +89,10 @@
         </div>
     </header>
 
-    <section id="hero" class="pt-32 pb-20 px-6 max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center gap-12 scroll-mt-20">
+    <section id="hero" class="pt-28 md:pt-32 pb-20 px-6 max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center gap-12 scroll-mt-20">
         <div class="flex-1 text-center md:text-left">
             
-            <h1 class="text-3xl md:text-6xl font-extrabold mb-6 text-[#1b1b18] leading-tight">
+            <h1 class="text-3xl sm:text-4xl md:text-6xl font-extrabold mb-6 text-[#1b1b18] leading-tight">
                 biMBA AIUEO<br/> Unit <span class="text-[#]"> Klender </span>
             </h1>
             <p class="text-black-500 text-lg mb-8 leading-relaxed max-w-lg mx-auto md:mx-0">
@@ -252,7 +252,7 @@
                 <h2 class="text-2xl md:text-4xl font-bold text-[#1b1b18]">Kurikulum Bimba</h2>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <a href="{{ route('kurikulum.level-1') }}" class="block group relative overflow-hidden rounded-2xl bg-green-50 border border-green-100 p-8 hover:bg-green-100 transition cursor-pointer">
                     <h3 class="text-2xl font-bold text-black-800 mb-2">Level 1</h3>
                     <p class="text-black-600 mb-6 text-sm">Membaca 100 Kata Sederhana</p>

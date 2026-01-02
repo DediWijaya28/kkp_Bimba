@@ -6,7 +6,16 @@
 <div class="space-y-6">
     <div class="flex justify-between items-center">
         <h1 class="text-2xl font-bold text-black-900">Manajemen Kelas</h1>
-        <a href="{{ route('admin.dashboard') }}" class="text-black-600 hover:text-black-900">&larr; Kembali ke Dashboard</a>
+        <div class="flex gap-4 items-center">
+            @if($classes->count() > 0)
+            <form action="{{ route('admin.classes.destroy-all') }}" method="POST" onsubmit="return confirm('PERINGATAN: Apakah Anda yakin ingin MENGHAPUS SEMUA KELAS? Tindakan ini tidak dapat dibatalkan.');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="text-red-600 hover:text-red-900 font-medium">Hapus Semua Kelas</button>
+            </form>
+            @endif
+            <a href="{{ route('admin.dashboard') }}" class="text-black-600 hover:text-black-900">&larr; Kembali ke Dashboard</a>
+        </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
