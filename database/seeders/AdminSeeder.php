@@ -10,11 +10,13 @@ class AdminSeeder extends Seeder
 {
     public function run(): void
     {
-        User::updateOrCreate(
-            ['email' => 'admin@bimba.com'],
+        // Gunakan firstOrCreate agar TIDAK me-reset password jika admin sudah ada.
+        // Gunakan Env Variable agar password awal bisa di-set dari luar (.env)
+        User::firstOrCreate(
+            ['email' => env('ADMIN_EMAIL', 'admin@bimba.com')],
             [
                 'name' => 'Administrator',
-                'password' => Hash::make('password'),
+                'password' => Hash::make(env('ADMIN_PASSWORD', 'password')),
                 'role' => 'admin',
                 'email_verified_at' => now(),
             ]
